@@ -166,3 +166,9 @@ node_modules/
 # downloaded stuff for 08-building-search-applications
 08-building-search-applications/scripts/transcripts_the_ai_show/
 .tool-versions
+
+fix_all.py
+fix_all_safe.py
+fix_embeddings.py
+fix_test.py
+test/

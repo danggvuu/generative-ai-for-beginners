@@ -22,7 +22,7 @@ dotenv.load_dotenv()
 API_KEY = os.environ["AZURE_OPENAI_API_KEY"]
 RESOURCE_ENDPOINT = os.environ["AZURE_OPENAI_ENDPOINT"]
 AZURE_OPENAI_MODEL_DEPLOYMENT_NAME = os.getenv(
-    "AZURE_OPENAI_MODEL_DEPLOYMENT_NAME", "gpt-5-mini"
+    "AZURE_OPENAI_MODEL_DEPLOYMENT_NAME", "gehihi"
 )
 MAX_TOKENS = 512
 PROCESSOR_THREADS = 10
@@ -90,17 +90,16 @@ def chatgpt_summary(text):
         {"role": "user", "content": text},
     ]
 
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model=AZURE_OPENAI_MODEL_DEPLOYMENT_NAME,
-        input=messages,
-        max_output_tokens=MAX_TOKENS,
+        messages=[{"role": "user", "content": messages}],
+        max_tokens=MAX_TOKENS,
         timeout=OPENAI_REQUEST_TIMEOUT,
-        store=False,
     )
 
     # print(response)
 
-    text = response.output_text or text
+    text = response.choices[0].message.content or text
     finish_reason = response.status
 
     # print(finish_reason)

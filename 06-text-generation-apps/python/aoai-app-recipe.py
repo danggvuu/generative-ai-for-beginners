@@ -62,12 +62,12 @@ except ValueError as e:
 # Note: Using validated and sanitized inputs
 prompt = f"Show me {no_recipes} recipes for a dish with the following ingredients: {ingredients}. Per recipe, list all the ingredients used, no {filter_value}: "
 
-response = client.responses.create(model=deployment, input=prompt, max_output_tokens=600, store=False)
+response = client.chat.completions.create(model=deployment, messages=[{"role": "user", "content": prompt}], max_tokens=600)
 
 
 # print response
 print("Recipes:")
-old_prompt_result = response.output_text
+old_prompt_result = response.choices[0].message.content
 if not old_prompt_result:
     print("No response received.")
 else:
@@ -75,12 +75,12 @@ else:
 
     prompt_shopping = "Produce a shopping list, and please don't include ingredients that I already have at home: "
     new_prompt = f"Given ingredients at home {ingredients} and these generated recipes: {old_prompt_result}, {prompt_shopping}"
-    response = client.responses.create(model=deployment, input=new_prompt, max_output_tokens=600, store=False)
+    response = client.chat.completions.create(model=deployment, messages=[{"role": "user", "content": new_prompt}], max_tokens=600)
 
     # print response
     print("\n=====Shopping list ======= \n")
-    if response.output_text:
-        print(response.output_text)
+    if response.choices[0].message.content:
+        print(response.choices[0].message.content)
     else:
         print("No response received.")
 

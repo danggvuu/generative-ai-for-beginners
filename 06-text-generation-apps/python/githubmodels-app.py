@@ -8,7 +8,7 @@ from azure.core.credentials import AzureKeyCredential
 token = os.environ["AZURE_INFERENCE_CREDENTIAL"]
 endpoint = os.environ["AZURE_INFERENCE_ENDPOINT"]
 
-model_name = "gpt-5-mini"
+model_name = "gehihi"
 
 client = ChatCompletionsClient(
     endpoint=endpoint,

@@ -24,10 +24,10 @@ Whenever certain questions are asked, you need to remember facts about the timel
 Provide answer for the question: {question}
 """
 # make a request using the Responses API
-response = client.responses.create(model=deployment, input=prompt, store=False)
+response = client.chat.completions.create(model=deployment, input=prompt)
 
 # print response
-print(response.output_text)
+print(response.choices[0].message.content)
 
 #  very unhappy _____.
 

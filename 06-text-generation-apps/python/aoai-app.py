@@ -17,10 +17,10 @@ deployment=os.environ['AZURE_OPENAI_DEPLOYMENT']
 # add your completion code
 prompt = "Complete the following: Once upon a time there was a"
 # make a request using the Responses API
-response = client.responses.create(model=deployment, input=prompt, store=False)
+response = client.chat.completions.create(model=deployment, input=prompt)
 
 # print response
-print(response.output_text)
+print(response.choices[0].message.content)
 
 #  very unhappy _____.
 

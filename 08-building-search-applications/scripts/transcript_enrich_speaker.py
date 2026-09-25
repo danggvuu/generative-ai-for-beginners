@@ -34,7 +34,7 @@ OPENAI_REQUEST_TIMEOUT = 60
 
 OPENAI_MAX_TOKENS = 512
 AZURE_OPENAI_MODEL_DEPLOYMENT_NAME = os.getenv(
-    "AZURE_OPENAI_MODEL_DEPLOYMENT_NAME", "gpt-5-mini"
+    "AZURE_OPENAI_MODEL_DEPLOYMENT_NAME", "gehihi"
 )
 
 
@@ -112,9 +112,9 @@ def get_speaker_info(text):
     function_name = None
     arguments = None
 
-    response_1 = client.responses.create(
+    response_1 = client.chat.completions.create(
         model=AZURE_OPENAI_MODEL_DEPLOYMENT_NAME,
-        input=[
+        messages=[
             {
                 "role": "system",
                 "content": "You are an AI assistant that can extract speaker names from text as a list of comma separated names. Try and extract the speaker names from the title. Speaker names are usually less than 3 words long.",
@@ -122,10 +122,9 @@ def get_speaker_info(text):
             {"role": "user", "content": text},
         ],
         tools=openai_functions,
-        max_output_tokens=OPENAI_MAX_TOKENS,
+        max_tokens=OPENAI_MAX_TOKENS,
         timeout=OPENAI_REQUEST_TIMEOUT,
         tool_choice={"type": "function", "name": "get_speaker_name"},
-        store=False,
     )
 
     # The model's response includes a function call. We extract the arguments from it.
